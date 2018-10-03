@@ -69,6 +69,7 @@ end
 
 function events:once(event, func)
 	local ev, ns = event_namespace(event)
+	assert(not ns) --TODO: fix this after implementing multiple namespaces
 	local id = {}
 	local ev = {ev, id}
 	self:on(ev, function(...)
