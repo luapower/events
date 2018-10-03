@@ -30,15 +30,15 @@ that method will also be called when the event fires, before other handlers.
   * `apple:off{nil, ns1}` - remove all event handlers on the `ns1` tag.
   * `apple:off() - remove all event handlers registered on `apple`.
 
-## Facts
+## Event facts
 
   * events fire in the order in which they were added.
   * extra args passed to `fire()` are passed to each event handler.
   * if the method `obj:<event>(args...)` is found, it is called first.
   * returning a non-nil value from a handler interrupts the event handling
     call chain and the value is returned back by `fire()`.
-  * all uninterrupted events fire the `event` meta-event which inserts the
-    event name as arg#1.
+  * the meta-event called `'event'` is fired on all events (the name of the
+  event that was fired is received as arg#1).
   * events can be tagged with multiple tags/namespaces `'event.ns1.ns2...'`
   or `{event, ns1, ns2, ...}`: tags/namespsaces are useful for easy bulk
   event removal with `obj:off'.ns1'` or `obj:off({nil, ns1})`.
@@ -61,7 +61,8 @@ Register an event handler that will only fire once.
 Call all event handlers registered with a particular event in the order
 in which they were registered. Extra args are passed to the handlers directly.
 The first handler to return a non-nil value breaks the call chain and the
-value is returned back to the user.
+value is returned back to the user. The meta-event named `'event'` is fired
+afterwards (but only if the call chain was not interrupted).
 
 If there's a method on the target object with the same name as the event,
 that method will be called first, before other handlers.
@@ -73,3 +74,4 @@ All tags must match. In the variant with a table arg, tags can be of any type.
 This allows objects to register event handlers on other objects using `self`
 as tag so they can later remove them with `obj:off({nil, self})`.
 
+This method can be safely called inside any event handler, even to remove itself.
