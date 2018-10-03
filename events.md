@@ -52,7 +52,7 @@ that method will also be called when the event fires, before other handlers.
 Register an event handler for a named event and optionally associate it with
 one or more tags/namespaces.
 
-### `obj:once(event, function ... end)`
+### `obj:once(event, function(self, args...) ... end)`
 
 Register an event handler that will only fire once.
 
@@ -66,7 +66,7 @@ value is returned back to the user.
 If there's a method on the target object with the same name as the event,
 that method will be called first, before other handlers.
 
-### `obj:off([event|'.ns1...'|{[event], [ns1, ...]}])`
+### `obj:off('[event][.ns1...]')` <br> `obj:off({[event], [ns1, ...]})` <br> `obj:off()`
 
 Remove event handlers based on the event name and/or any matching tags.
 All tags must match. In the variant with a table arg, tags can be of any type.
